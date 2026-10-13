@@ -9,9 +9,19 @@ TOP = fir
 USE_VITIS=1
 
 ifeq ($(USE_VITIS),1)
-VITIS_COMPILER := $(shell dirname $(shell which vitis_hls))
 
-VHLS = $(VITIS_COMPILER)/../../../Vitis_HLS/2024.1
+VITIS_HLS_PATH := $(shell which vitis_hls 2>/dev/null)
+ifeq ($(strip $(VITIS_HLS_PATH)),)
+  $(error Could not find "vitis_hls" on PATH.)
+endif
+VITIS_COMPILER := $(shell dirname "$(VITIS_HLS_PATH)")
+
+ifneq (,$(findstring 2024.2,$(VITIS_HLS_PATH)))
+  VHLS := $(VITIS_COMPILER)/../../../Vitis/2024.2
+else
+  VHLS := $(VITIS_COMPILER)/../../../Vitis_HLS/2024.1
+endif
+
 HLS_COMPILER=vitis-run --mode hls --tcl 
 else
 VHLS := $(shell vivado_hls -r)
@@ -36,7 +46,7 @@ GEN_TCL = $(CURDIR)/../../scripts/gen_hls_runner_script.py
 #HLS_CONFIG_FILE = $(CURDIR)/__hls_config__.ini
 HLS_CONFIG_FILE = $(CURDIR)/__hls_config__.ini
 
-$(warning $(EXAMPLES_LOG))
+#$(warning $(EXAMPLES_LOG))
 
 %.o: %.cpp
 	$(CXX) -I$(VHLS)/include -c $< -o $@
@@ -66,7 +76,7 @@ HLS_TARGETS = $(patsubst %.cpp,%.comp,$(CXX_HLS_TARGET_FILES))
 	./$< > $@ 2>&1 || { s=$$?; echo "./$< > $@ failed $$s" >&2; exit $$s; }
 
 
-hls: test $(HLS_TARGETS)
+hls: $(HLS_TARGETS)
 
 test: $(EXAMPLES_LOG)
 
