@@ -13,4 +13,5 @@ workspace/
 project_*/
 !project_files/
 
-project1/out/
+# including outputs
+# project1/out/
