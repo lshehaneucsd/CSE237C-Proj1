@@ -2,9 +2,12 @@
 **/*.proj/
 **/*.comp/
 **/logs/
-*.rpt
-*.tcl
-*.log
+
+# Logs left in like noted https://pp4fpgas.readthedocs.io/en/latest/project1.html#code-submission:~:text=__hls_config__.ini-,fir_test,-.log%20%23%20Generated%20by
+# *.rpt
+# *.tcl
+# *.log
+
 out.dat
 workspace/
 project_*/
