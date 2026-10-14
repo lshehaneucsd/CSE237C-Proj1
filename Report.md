@@ -142,7 +142,7 @@ The resource usage is much higher than the baseline due to the placementment of 
 
 ## Question 8
 
-[https\://github.com/lshehaneucsd/CSE237C\_Proj1](https://github.com/lshehaneucsd/CSE237C_Proj1) 
+[https\://github.com/lshehaneucsd/CSE237C-Proj1](https://github.com/lshehaneucsd/CSE237C-Proj1)
 
 Contributors
 
